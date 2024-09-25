@@ -3,7 +3,6 @@ from pydantic import BaseModel, EmailStr
 
 
 class Customer(BaseModel):
-    # customerid: Optional[int]
     firstname: str
     lastname: str
     email: EmailStr
@@ -23,3 +22,10 @@ class Customer(BaseModel):
     creditcard: str
     creditcardexpiration: str
     income: int
+
+
+class OrderHistory(BaseModel):
+    cust_fullname: str
+    prod_id: int
+    title: str
+    price: float

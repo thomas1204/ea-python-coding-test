@@ -1,1 +1,1 @@
-from .models import Customer
+from .models import Customer, OrderHistory
