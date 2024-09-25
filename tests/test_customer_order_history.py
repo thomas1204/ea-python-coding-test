@@ -1,6 +1,5 @@
 import pytest
 from contants.models import OrderHistory
-from pydantic import ValidationError
 from db.repository import get_order_histroy_of_customer
 
 customers = [7888, 15399, 13734]
