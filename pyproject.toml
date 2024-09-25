@@ -1,0 +1,19 @@
+# pyproject.toml
+
+[tool.black]
+line-length = 88        # Default line length, you can customize it (e.g., 100)
+target-version = ['py38'] # Target Python versions, e.g., ['py37', 'py38', 'py39']
+skip-string-normalization = false # If true, Black won’t change string quotes
+exclude = '''
+/(
+    \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
