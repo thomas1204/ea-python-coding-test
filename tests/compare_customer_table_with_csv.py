@@ -13,10 +13,12 @@ def load_test_csv():
 
 def normalize_dataframes(df_db, df_csv):
     df_csv = df_csv[df_db.columns]
-    for col in df_db.columns:
-        if df_db[col].dtype != df_csv[col].dtype:
-            df_db[col] = df_db[col].astype(str)
-            df_csv[col] = df_csv[col].astype(str)
+    df_db = df_db.apply(
+        lambda col: col.astype(str) if col.dtype != df_csv[col.name].dtype else col
+    )
+    df_csv = df_csv.apply(
+        lambda col: col.astype(str) if df_db[col.name].dtype != col.dtype else col
+    )
     return df_db, df_csv
 
 
