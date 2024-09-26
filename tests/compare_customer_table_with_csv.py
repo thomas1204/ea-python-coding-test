@@ -20,6 +20,12 @@ def normalize_dataframes(df_db, df_csv):
     return df_db, df_csv
 
 
+def compare_rows(db_row, csv_row):
+    if not db_row.equals(csv_row):
+        return (db_row.name, db_row, csv_row)
+    return None
+
+
 def compare_rows_by_email(df_db, df_csv):
     mismatches = []
     missing_rows_in_csv = []
@@ -47,12 +53,10 @@ def compare_rows_by_email(df_db, df_csv):
     # Compare rows for emails that are common in both datasets
     common_emails = df_db.index.intersection(df_csv.index)
 
-    for email in common_emails:
-        db_row = df_db.loc[email]
-        csv_row = df_csv.loc[email]
-
-        if not db_row.equals(csv_row):
-            mismatches.append((email, db_row, csv_row))
+    mismatches = df_db.loc[common_emails].apply(
+        lambda db_row: compare_rows(db_row, df_csv.loc[db_row.name]), axis=1
+    )
+    mismatches = mismatches.dropna().tolist()
 
     return mismatches, missing_rows_in_csv, missing_rows_in_db
 
