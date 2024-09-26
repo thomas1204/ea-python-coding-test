@@ -26,6 +26,13 @@ def compare_rows(db_row, csv_row):
     return None
 
 
+def print_mismatch(mismatch):
+    email, db_row, csv_row = mismatch
+    print(f"Mismatch for email {email}:")
+    print(f"DB: {db_row}")
+    print(f"CSV: {csv_row}\n")
+
+
 def compare_rows_by_email(df_db, df_csv):
     mismatches = []
     missing_rows_in_csv = []
@@ -74,13 +81,7 @@ def test_compare_customers_data():
 
     # Report mismatched rows
     if mismatches:
-        for mismatch in mismatches:
-            email = mismatch[0]
-            db_row = mismatch[1]
-            csv_row = mismatch[2]
-            print(f"Mismatch for email {email}:")
-            print(f"DB: {db_row}")
-            print(f"CSV: {csv_row}\n")
+        pd.Series(mismatches).apply(print_mismatch)
 
     # Report missing rows in CSV
     if not missing_rows_in_csv.empty:
