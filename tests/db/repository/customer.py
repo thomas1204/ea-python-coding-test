@@ -80,3 +80,17 @@ def get_customer(email: str) -> Optional[Customer]:
     finally:
         cursor.close()
         conn.close()
+
+
+def get_all_customer():
+    conn = get_connection()
+    cursor = conn.cursor()
+    try:
+        cursor.execute("SELECT * FROM customers")
+        return cursor.fetchall()
+    except Exception as e:
+        print(f"Error fetching customer: {e}")
+
+    finally:
+        cursor.close()
+        conn.close()
